@@ -6,7 +6,7 @@
 // Множество - реализация через битовые поля
 
 #include "tset.h"
-
+//privet,medved
 TSet::TSet(int mp) : BitField(-1)
 {
 }
