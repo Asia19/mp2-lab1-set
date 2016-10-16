@@ -9,6 +9,9 @@
 
 TBitField::TBitField(int len)
 {
+	BitLen = len;
+	MemLen = (len + sizeof(int)*8 - 1)/(sizeof(int)*8);
+	pMem = new ui[MemLen];
 }
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
@@ -122,8 +125,19 @@ TBitField TBitField::operator~(void) // отрицание
 
 istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
+	int i = 0;
+	char v;
+	do {istr >> v;} while ( v != 0);
+	while (1) { istr >> v;
+	if (v == '0') bf.ClrBit(i++);
+	else if (v == '1') bf.SetBit(i++); else break;
+	}
+	return istr;
 }
 
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 {
+	int len = bf.GetLength();
+	for ( int i=0;i < len; i++) if (bf.GetBit(i)) ostr << '1'; else ostr << '0';
+	return ostr;
 }
