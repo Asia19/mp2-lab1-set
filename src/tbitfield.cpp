@@ -9,9 +9,11 @@
 
 TBitField::TBitField(int len)
 {
+	if (len < 0) { throw "ne to chislo!"; }
 	BitLen = len;
 	MemLen = (len + sizeof(int)*8 - 1)/(sizeof(int)*8);
 	pMem = new ui[MemLen];
+	for (int i = 0; i < MemLen; i++) { pMem[i] = 0; }
 }
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
@@ -34,6 +36,7 @@ int TBitField::GetMemIndex(const int n) const // индекс Мем для би
 
 ui TBitField::GetMemMask(const int n) const // битовая маска для бита n
 {
+	if ((n < 0) || (n >= BitLen))  { throw "ne to chislo!"; }
 	int j, m;
 	m = n % (sizeof(int)* 8);
 	j = 1 << m;
@@ -49,17 +52,20 @@ int TBitField::GetLength(void) const // получить длину (к-во б�
 
 void TBitField::SetBit(const int n) // установить бит
 {
+	if ((n < 0) || (n >= BitLen))  { throw "ne to chislo!"; }
 	if ((n >= 0) && (n< BitLen)) pMem[GetMemIndex(n)] |= GetMemMask(n);
 }
 
 void TBitField::ClrBit(const int n) // очистить бит
 {
+	if ((n < 0) || (n >= BitLen))  { throw "ne to chislo!"; }
 	if ((n >= 0) && (n< BitLen)) pMem[GetMemIndex(n)] &= ~GetMemMask(n);
 }
 
 int TBitField::GetBit(const int n) const // получить значение бита
 {
-	if ((n >= 0) && (n< BitLen)) return pMem[GetMemIndex(n)] & GetMemMask(n);
+	if ((n < 0) || (n >= BitLen))  { throw "ne to chislo!"; }
+	else return (pMem[GetMemIndex(n)] & GetMemMask(n));
 	return 0;
 }
 

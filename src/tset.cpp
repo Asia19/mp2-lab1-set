@@ -76,10 +76,14 @@ TSet TSet::operator+(const TSet &s) // объединение
 
 TSet TSet::operator+(const int Elem) // объединение с элементом
 {
+	TSet temp(BitField | Elem);
+	return temp;
 }
 
 TSet TSet::operator-(const int Elem) // разность с элементом
 {
+	TSet temp(BitField & ~Elem);
+	return temp;
 }
 
 TSet TSet::operator*(const TSet &s) // пересечение
