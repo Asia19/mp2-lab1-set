@@ -9,7 +9,6 @@
 
 TSet::TSet(int mp) : MaxPower(mp), BitField(mp)
 {
-
 }
 
 // конструктор копирования
@@ -36,16 +35,19 @@ int TSet::GetMaxPower(void) const // получить макс. к-во эл-т�
 
 int TSet::IsMember(const int Elem) const // элемент множества?
 {
-    return BitField.GetBit(Elem);
+	if ((Elem < 0) || (Elem >= MaxPower))  throw "error"; 
+	return BitField.GetBit(Elem);
 }
 
 void TSet::InsElem(const int Elem) // включение элемента множества
 {
+	if ((Elem < 0) || (Elem >= MaxPower))  throw "error";
 	BitField.SetBit(Elem);
 }
 
 void TSet::DelElem(const int Elem) // исключение элемента множества
 {
+	if ((Elem < 0) || (Elem >= MaxPower))  throw "error";
 	BitField.ClrBit(Elem);
 }
 
